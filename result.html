@@ -1,0 +1,95 @@
+<head>
+  <script>
+    function calculateScores(answers) {
+      var extroversionScore = 0;
+      var agreeablenessScore = 0;
+      var conscientiousnessScore = 0;
+      var emotionalStabilityScore = 0;
+      var opennessScore = 0;
+      
+      
+      for (var question in answers) {
+        if (question.startsWith("question-") && question.includes("-")) {
+          var questionNumber = parseInt(question.split("-")[0].slice(8));
+          var score = parseInt(answers[question]);
+          if (questionNumber >= 1 && questionNumber <= 36) {
+            if (questionNumber == 6 || questionNumber == 21 || questionNumber == 31) {
+              score = 6 - score;
+            }
+            extroversionScore += score;
+          } else if (questionNumber >= 37 && questionNumber <= 42) {
+            if (questionNumber == 2 || questionNumber == 12 || questionNumber == 27 || questionNumber == 37) {
+              score = 6 - score;
+            }
+            agreeablenessScore += score;
+          } else if (questionNumber >= 43 && questionNumber <= 44) {
+            if (questionNumber == 8 || questionNumber == 18 || questionNumber == 23 || questionNumber == 38 || questionNumber == 43) {
+              score = 6 - score;
+            }
+            conscientiousnessScore += score;
+          } else if (questionNumber >= 4 && questionNumber <= 39) {
+            if (questionNumber == 4 || questionNumber == 9 || questionNumber == 14 || questionNumber == 19 || questionNumber == 29 || questionNumber == 34 || questionNumber == 39) {
+              score = 6 - score;
+            }
+            emotionalStabilityScore += score;
+          } else if (questionNumber >= 5 && questionNumber <= 41) {
+            if (questionNumber == 35 || questionNumber == 41) {
+              score = 6 - score;
+            }
+            opennessScore += score;
+          }
+        }
+      }
+      
+      return {
+        extroversion: extroversionScore,
+        agreeableness: agreeablenessScore,
+        conscientiousness: conscientiousnessScore,
+        emotionalStability: emotionalStabilityScore,
+        openness: opennessScore
+      };
+    }
+    
+    function displayResults() {
+      var answers = getAnswersFromLocalStorage(); // assume que as respostas estão armazenadas no LocalStorage
+      var scores = calculateScores(answers);
+      var table = document.getElementById("results-table");
+      table.rows[1].cells[1].innerHTML = scores.extroversion;
+      table.rows[2].cells[1].innerHTML = scores.agreeableness;
+      table.rows[3].cells[1].innerHTML = scores.conscientiousness;
+      table.rows[4].cells[1].innerHTML = scores.emotionalStability;
+      table.rows[5].cells[
+1].innerHTML = scores.openness;
+}
+</script>
+
+</head>
+<body onload="displayResults()">
+  <table id="results-table">
+    <tr>
+      <th>Personality Trait</th>
+      <th>Score</th>
+    </tr>
+    <tr>
+      <td>Extroversion</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Agreeableness</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Conscientiousness</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Emotional Stability</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Openness</td>
+      <td></td>
+    </tr>
+  </table>
+</body>
+</html>
